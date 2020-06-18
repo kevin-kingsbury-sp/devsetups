@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+
+  db:
+    environment:
+      -  ACCEPT_EULA=Y
+      # The 'sa' password has a minimum complexity requirement (8 characters,
+      # uppercase, lowercase, alphanumerical and/or non-alphanumerical)
+      -  SA_PASSWORD=sup3rPass
+    image: custom/mssql/server:2017-latest
+    build: .
+    restart: always
+    volumes:
+      - ./sqlscripts:/docker-entrypoint-initdb.d/
+    ports:
+      - 1433:1433
